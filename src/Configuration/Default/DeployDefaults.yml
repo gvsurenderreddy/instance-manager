@@ -1,0 +1,83 @@
+
+  defaults:
+    type:
+      media:
+        options:
+          folders:
+            typo3: &typeMediaOptionsFoldersTypo3
+              - {"folder": "/fileadmin", "maxFileSize":"5m"}
+              - {"folder": "/uploads", "maxFileSize":"5m"}
+            magento: &typeMediaOptionsFoldersMagento
+              - {"folder": "/media", "maxFileSize":"5m"}
+          excludePatterns:
+            typo3: &typeMediaOptionsExcludePatternsTypo3
+              - {"pattern": "/fileadmin/_processed_"}
+            multimedia: &typeMediaOptionsExcludePatternsMultimedia
+              - {"pattern": "*.mp4"}
+              - {"pattern": "*.zip"}
+              - {"pattern": "*.pdf"}
+              - {"pattern": "*.exe"}
+              - {"pattern": "*.doc"}
+              - {"pattern": "*.docx"}
+              - {"pattern": "*.pptx"}
+              - {"pattern": "*.ppt"}
+              - {"pattern": "*.xls"}
+              - {"pattern": "*.xlsx"}
+              - {"pattern": "*.xlsm"}
+              - {"pattern": "*.tiff"}
+              - {"pattern": "*.tif"}
+              - {"pattern": "*.potx"}
+              - {"pattern": "*.mpg"}
+              - {"pattern": "*.mp3"}
+              - {"pattern": "*.avi"}
+              - {"pattern": "*.wmv"}
+              - {"pattern": "*.flv"}
+              - {"pattern": "*.eps"}
+              - {"pattern": "*.ai"}
+              - {"pattern": "*.mov"}
+      database:
+        options:
+          ignoreTables:
+            typo3: &typeDatabaseOptionsIgnoreTablesTypo3
+              - cf_.*
+              - cache_.*
+              - sys_history
+              - sys_file_processedfile
+              - sys_log
+              - tx_devlog
+              - tx_extensionmanager_domain_model_extension
+              - tx_realurl_chashcache
+              - tx_realurl_errorlog
+              - tx_realurl_pathcache
+              - tx_realurl_uniqalias
+              - tx_realurl_urldecodecache
+              - tx_realurl_urlencodecache
+              - tx_powermail_domain_model_mails
+              - tx_powermail_domain_model_answers
+              - tx_solr_.*
+            magento: &typeDatabaseOptionsIgnoreTablesMagento
+              - log_customer
+          postImportSql:
+            typo3:
+              local:  &typeDatabaseOptionsPostImportSqlTypo3Local >
+                UPDATE be_users SET password = "5f4dcc3b5aa765d61d8327deb882cf99";
+                UPDATE be_users SET disable = 0;
+                DELETE FROM sys_registry WHERE entry_namespace="tx_solr";
+                UPDATE sys_domain SET sorting = 16111222;
+                SET @counter:=0;
+                UPDATE sys_domain SET sorting=@counter:=@counter+1 ORDER BY FIELD(tx_local_context, "local", "dev", "beta", "prelive", "live");
+                UPDATE sys_domain SET hidden=1;
+                UPDATE sys_domain SET hidden=0 WHERE tx_local_context = "local";
+
+              dev: &typeDatabaseOptionsPostImportSqlTypo3Dev >
+                UPDATE be_users SET disable = 0;
+                DELETE FROM sys_registry WHERE entry_namespace="tx_solr";
+                UPDATE sys_domain SET sorting = 16111222;
+                SET @counter:=0;
+                UPDATE sys_domain SET sorting=@counter:=@counter+1 ORDER BY FIELD(tx_local_context, "dev", "local", "beta", "prelive", "live");
+                UPDATE sys_domain SET hidden=1;
+                UPDATE sys_domain SET hidden=0 WHERE tx_local_context = "dev";
+            magento:
+
+
+

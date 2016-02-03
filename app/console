@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+try {
+    $app = require_once dirname(__DIR__) ."/bootstrap.php";
+    $app["console"]->run();
+} catch (\Exception $e) {
+    echo $e->getMessage()."\n";
+}
