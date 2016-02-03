@@ -8,24 +8,13 @@ Installation
 
 ***Using Composer***
 
-Add the following to the "repositories" section of your `composer.json` file:
-
-```
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "git@github.com:sourcebroker/instance-manager.git"
-        }
-    ]
-```
-
 Add the following to the "require" section of your `composer.json` file:
 
 ```
     "sourcebroker/instance-manager": "dev-master",
 ```
 
-And update your dependencies
+And update your dependencies:
 
 ```
     php composer.phar update
@@ -35,10 +24,10 @@ And update your dependencies
 Configuration
 ============
 
-Adds the following configuration to following path:
+Create configuration file at following path:
 
-- For Symfony application `app/config/config.yml`:
-- For TYPO3 instance in `typo3conf/ext/AdditionalConfiguration_deploy.yml`
-- For Magento instance in `app/etc/local.yml`
+- For Symfony instance at `app/config/config.yml`:
+- For TYPO3 instance at `typo3conf/ext/AdditionalConfiguration_deploy.yml`
+- For Magento instance at `app/etc/local.yml`
 
 Example configuration will follow later.
